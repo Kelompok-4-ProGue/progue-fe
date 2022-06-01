@@ -26,7 +26,7 @@ const Footer = ({ menus }) => {
       <div className='mt-9 flex flex-row mr-[-32px]'>
         {menus.map((menu, index) => {
           return (
-            <div key={index} className='w-20 mr-8'>
+            <div key={index} className='w-20 mr-8 flex items-center justify-center'>
               <Link href={menu.href}>
                 <a className={`text-white text-tl-sm font-normal hover:font-bold transition`}>{menu.label}</a>
               </Link>
