@@ -68,15 +68,16 @@ const AppBar = ({ menus, active }) => {
               })}
             </div>
             <div className='hidden md:flex items-center justify-end md:flex-1 lg:w-0'>
-              <button
-                onClick={() => {}}
-                className='ml-5 whitespace-nowrap inline-flex items-center justify-center px-5 py-[6px] w-[86px] rounded-md shadow-sm text-lb-sm font-normal text-white border-[1px] border-blue bg-blue hover:bg-blue-700'
-              >
-                Login
-              </button>
-              <button onClick={() => {}} className='ml-5 whitespace-nowrap inline-flex items-center justify-center px-5 py-[6px] w-[86px] rounded-md shadow-sm text-lb-sm font-normal text-white border-[1px]  border-blue hover:bg-blue-700'>
-                Register
-              </button>
+              <Link href='/auth/login'>
+                <div className='ml-5 whitespace-nowrap inline-flex items-center justify-center px-5 py-[6px] w-[86px] rounded-md shadow-sm text-lb-sm font-normal text-white border-[1px] border-blue bg-blue hover:bg-blue-700 cursor-pointer'>
+                  Login
+                </div>
+              </Link>
+              <Link href='/auth/register'>
+                <div className='ml-5 whitespace-nowrap inline-flex items-center justify-center px-5 py-[6px] w-[86px] rounded-md shadow-sm text-lb-sm font-normal text-white border-[1px]  border-blue hover:bg-blue-700 cursor-pointer'>
+                  Register
+                </div>
+              </Link>
             </div>
           </div>
         </div>

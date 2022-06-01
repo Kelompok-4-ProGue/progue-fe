@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import AppBar from '../components/app-bar';
-import Footer from '../components/footer';
-import menus from '../data/menus';
-import LoginGirl from '../assets/images/login/login-girl.png';
+import AppBar from '../../components/app-bar';
+import Footer from '../../components/footer';
+import menus from '../../data/menus';
+import LoginGirl from '../../assets/images/login/login-girl.png';
 
-export default function Home() {
+export default function Login() {
   return (
     <div className='flex flex-col min-h-full items-center'>
       <Head>
@@ -14,13 +14,15 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <AppBar menus={menus} active='Home' />
+      <AppBar menus={menus} active='Login' />
 
       <main className='w-full'>
         <div className='h-[835px] w-full bg-light-blue flex items-end justify-center'>
           <div className='flex items-end justify-center h-full max-w-[1175px] ml-[-65px]'>
-            <Image src={LoginGirl} alt='Login' height={782.9} width={607.67} />
-            <div className='h-full flex items-center justify-center ml-[31px] flex-auto'>
+            <div className='flex-none flex justify-end w-[607.67px]'>
+              <Image src={LoginGirl} alt='Login' height={782.9} width={607.67} />
+            </div>
+            <div className='h-full flex items-center justify-center ml-[31px] flex-auto max-w-xl'>
               <div className='bg-light-white px-8 py-[50px] flex items-center justify-center flex-col rounded-[20px] w-full'>
                 <div className='mb-[19px]'>
                   <h1 className='text-hl-md font-bold text-center'>Masuk</h1>
@@ -44,13 +46,13 @@ export default function Home() {
                   {/* <Link href='/'>Lupa Password</Link> */}
                 </div>
                 <div className='flex items-center justify-center w-full mb-[19px]'>
-                  <button className='bg-blue text-white font-bold py-[15px] px-[25px] rounded-[10px] hover:bg-blue-dark focus:outline-none focus:shadow-outline w-full'>Masuk</button>
+                  <button className='bg-blue text-white font-bold py-[15px] px-[25px] rounded-[10px] hover:bg-blue-dark focus:outline-none focus:shadow-outline w-full'>Daftar</button>
                 </div>
                 <div>
                   <p className='text-center text-lb-lg font-normal'>
                     Belum punya akun?{'  '}
-                    <Link href='/register'>
-                      <span className='text-blue font-bold'>Daftar</span>
+                    <Link href='/auth/login'>
+                      <span className='text-blue font-bold cursor-pointer'>Daftar</span>
                     </Link>
                   </p>
                 </div>
