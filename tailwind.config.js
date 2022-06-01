@@ -72,6 +72,10 @@ module.exports = {
           'Noto Color Emoji',
         ],
       },
+      dropShadow: {
+        // prettier-ignore
+        'c': '-4px 4px 50px rgba(0, 48, 119, 0.1)',
+      },
     },
   },
   plugins: [],
