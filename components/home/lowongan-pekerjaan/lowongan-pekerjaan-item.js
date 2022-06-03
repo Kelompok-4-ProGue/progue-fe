@@ -16,8 +16,8 @@ const LowonganPekerjaanItem = ({ id, title, company, companyIcon, location, work
       </div>
       <h2 className='text-tl-lg font-bold pb-[10px]'>{title}</h2>
       <p className='text-tl-sm font-bold pb-[10px]'>{salary}</p>
-      <div className='flex justify-between items-center'>
-        <Image src={DropBox} alt='' layout='intrinsic'></Image>
+      <div className='flex justify-between items-center  h-[30px]'>
+        <Image src={DropBox} alt='' layout='fixed' width='100%' height='100%' objectFit='contain'></Image>
         <p className='text-lb-md text-gray'>{createdAt}</p>
       </div>
     </div>

@@ -5,7 +5,7 @@ const menus = [
   },
   {
     label: 'Loker',
-    href: '/loker',
+    href: '/lowongan-pekerjaan',
   },
   {
     label: 'Pelatihan',
