@@ -5,20 +5,20 @@ import Head from 'next/head';
 import AppBar from '../../components/app-bar';
 import Footer from '../../components/footer';
 import menus from '../../data/menus';
-import LowonganPekerjaanItem from '../../components/home/lowongan-pekerjaan/lowongan-pekerjaan-item';
-import LowonganPekerjaanDetails from '../../components/lowongan-pekerjaan/lowongan-pekerjaan-details';
+import PelatihanKerjaItem from '../../components/pelatihan/pelatihan-kerja-item';
+import PelatihanKerjaDetails from '../../components/pelatihan/pelatihan-kerja-details';
 
 // icons
 import { BriefcaseIcon, SearchIcon, LocationMarkerIcon, HomeIcon } from '@heroicons/react/solid';
 
 // data
-import jobs from '../../data/jobs';
+import pelatihan from '../../data/pelatihan';
 
-const LowonganPekerjaan = () => {
+const PelatihanKerja = () => {
   return (
     <div className='flex flex-col min-h-full items-center'>
       <Head>
-        <title>Lowongan Pekerjaan | Progue</title>
+        <title>Pelatihan Kerja | Progue</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
@@ -30,7 +30,7 @@ const LowonganPekerjaan = () => {
           <div className='w-full max-w-ds h-full py-[50px]'>
             {/* Title */}
             <h1 className='text-ds-sm font-bold'>
-              Lowongan <span className='text-blue'>Pekerjaan</span>
+              Pelatihan <span className='text-blue'>Kerja</span>
             </h1>
 
             {/* Filter & Search */}
@@ -66,13 +66,23 @@ const LowonganPekerjaan = () => {
           <div className='w-full max-w-ds h-full py-[50px] flex justify-center'>
             {/* Select */}
             <aside className='w-[343px] flex-none drop-shadow-c h-screen sticky top-16 overflow-auto mr-3 grid grid-cols-1 gap-5 rounded-[20px]'>
-              {jobs.map((job, index) => (
-                <LowonganPekerjaanItem key={index} id={job.id} title={job.title} company={job.company} companyIcon={job.companyIcon} location={job.location} workFrom={job.workFrom} salary={job.salary} createdAt={job.createdAt} />
+              {pelatihan.map((item, index) => (
+                <PelatihanKerjaItem
+                  key={index}
+                  id={item.id}
+                  title={item.title}
+                  courseOwner={item.courseOwner}
+                  courseOwnerIcon={item.courseOwnerIcon}
+                  createdAt={item.createdAt}
+                  price={item.price}
+                  location={item.location}
+                  online={item.online}
+                />
               ))}
             </aside>
 
             {/* Details */}
-            <LowonganPekerjaanDetails />
+            <PelatihanKerjaDetails />
           </div>
         </div>
       </main>
@@ -82,4 +92,4 @@ const LowonganPekerjaan = () => {
   );
 };
 
-export default LowonganPekerjaan;
+export default PelatihanKerja;

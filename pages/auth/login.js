@@ -46,7 +46,7 @@ export default function Login() {
                   {/* <Link href='/'>Lupa Password</Link> */}
                 </div>
                 <div className='flex items-center justify-center w-full mb-[19px]'>
-                  <button className='bg-blue text-white font-bold py-[15px] px-[25px] rounded-[10px] hover:bg-blue-dark focus:outline-none focus:shadow-outline w-full'>Daftar</button>
+                  <button className='bg-blue text-white font-bold py-[15px] px-[25px] rounded-[10px] hover:bg-blue-dark focus:outline-none focus:shadow-outline w-full'>Masuk</button>
                 </div>
                 <div>
                   <p className='text-center text-lb-lg font-normal'>

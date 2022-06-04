@@ -58,7 +58,7 @@ export default function Home() {
         </div>
 
         {/* Blog */}
-        <div className='w-full bg-white flex items-end justify-center'>
+        {/* <div className='w-full bg-white flex items-end justify-center'>
           <div className='w-full max-w-ds h-full pt-36 pb-20'>
             <div className='flex justify-between items-center'>
               <h1 className='text-ds-sm font-bold'>
@@ -70,7 +70,7 @@ export default function Home() {
             </div>
             <BlogCarousel />
           </div>
-        </div>
+        </div> */}
 
         {/* CV Maker */}
         <CVMakerHero />

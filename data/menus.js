@@ -12,10 +12,6 @@ const menus = [
     href: '/pelatihan',
   },
   {
-    label: 'Blog',
-    href: '/blog',
-  },
-  {
     label: 'CV Maker',
     href: '/cv-maker',
   },

@@ -8,10 +8,6 @@ import RegisterMen from '../../assets/images/register/register-men.png';
 import { useState } from 'react';
 import { UploadIcon } from '@heroicons/react/outline';
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ');
-}
-
 export default function Register() {
   const [isCompany, setIsCompany] = useState(false);
 
