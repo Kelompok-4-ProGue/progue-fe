@@ -1,12 +1,49 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+
 import AppBar from '../../components/app-bar';
 import Footer from '../../components/footer';
 import menus from '../../data/menus';
 import LoginGirl from '../../assets/images/login/login-girl.png';
 
+import { useState } from 'react';
+
 export default function Login() {
+  const router = useRouter();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const headers = new Headers();
+    headers.append('Accept', 'application/json');
+
+    const urlencoded = new URLSearchParams();
+    urlencoded.append('email', email);
+    urlencoded.append('password', password);
+
+    const requestOptions = {
+      method: 'POST',
+      headers: headers,
+      body: urlencoded,
+      redirect: 'follow',
+    };
+
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/login`, requestOptions);
+    const responseJson = await response.json();
+
+    if (response.ok) {
+      window.localStorage.setItem('token', responseJson.token);
+
+      router.push('/');
+    } else {
+      console.log('error', responseJson);
+    }
+  };
+
   return (
     <div className='flex flex-col min-h-full items-center'>
       <Head>
@@ -29,8 +66,26 @@ export default function Login() {
                   <p className='text-tl-md font-normal text-center'>Lamar pekerjaan di Perusahaan Impian anda</p>
                 </div>
                 <div className=''>
-                  <input required placeholder='Email' type='email' className='px-[25px] py-[15px] bg-input text-gray rounded-[10px] w-full mb-[19px]' />
-                  <input required placeholder='Password' type='password' className='px-[25px] py-[15px] bg-input text-gray rounded-[10px] w-full mb-[19px]' />
+                  <input
+                    required
+                    placeholder='Email'
+                    type='email'
+                    className='px-[25px] py-[15px] bg-input text-gray rounded-[10px] w-full mb-[19px]'
+                    onChange={(event) => {
+                      console.log(event.target.value);
+                      setEmail(event.target.value);
+                    }}
+                  />
+                  <input
+                    required
+                    placeholder='Password'
+                    type='password'
+                    className='px-[25px] py-[15px] bg-input text-gray rounded-[10px] w-full mb-[19px]'
+                    onChange={(event) => {
+                      console.log(event.target.value);
+                      setPassword(event.target.value);
+                    }}
+                  />
                 </div>
                 <div className='flex items-center justify-between w-full mb-[19px]'>
                   <div className='form-check'>
@@ -46,12 +101,14 @@ export default function Login() {
                   {/* <Link href='/'>Lupa Password</Link> */}
                 </div>
                 <div className='flex items-center justify-center w-full mb-[19px]'>
-                  <button className='bg-blue text-white font-bold py-[15px] px-[25px] rounded-[10px] hover:bg-blue-dark focus:outline-none focus:shadow-outline w-full'>Masuk</button>
+                  <button className='bg-blue text-white font-bold py-[15px] px-[25px] rounded-[10px] hover:bg-blue-dark focus:outline-none focus:shadow-outline w-full' onClick={handleSubmit}>
+                    Masuk
+                  </button>
                 </div>
                 <div>
                   <p className='text-center text-lb-lg font-normal'>
                     Belum punya akun?{'  '}
-                    <Link href='/auth/login'>
+                    <Link href='/auth/register'>
                       <span className='text-blue font-bold cursor-pointer'>Daftar</span>
                     </Link>
                   </p>

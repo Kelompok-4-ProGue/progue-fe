@@ -1,13 +1,27 @@
-import { Fragment } from 'react';
+import { Fragment, useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Popover, Transition } from '@headlessui/react';
+import { Popover, Transition, Menu } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
-import ProgueLogo from '../public/progue-text-light.svg';
+import Profile from '../assets/images/profile.png';
 // import useAuth from '../context/AuthContext';
 
-const AppBar = ({ menus, active }) => {
+const AppBar = ({ menus, active, userData }) => {
   // const { login, logout } = useAuth();
+  console.log(userData);
+
+  const [user, setUser] = useState(userData);
+  const [name, setName] = useState('');
+
+  useEffect(() => {
+    if (userData) {
+      setUser(userData);
+      console.log(userData.name);
+      setName(userData.name);
+    }
+  }, [userData]);
+
+  // {userData.role === 'company' ? userData.company.company_name : userData.job_finder.full_name}
 
   return (
     <>
@@ -68,16 +82,49 @@ const AppBar = ({ menus, active }) => {
               })}
             </div>
             <div className='hidden md:flex items-center justify-end md:flex-1 lg:w-0'>
-              <Link href='/auth/login'>
-                <div className='ml-5 whitespace-nowrap inline-flex items-center justify-center px-5 py-[6px] w-[86px] rounded-md shadow-sm text-lb-sm font-normal text-white border-[1px] border-blue bg-blue hover:bg-blue-700 cursor-pointer'>
-                  Login
+              {user ? (
+                <Menu as='div' className='relative inline-block text-left'>
+                  <div>
+                    <Menu.Button className='flex items-center justify-end'>
+                      <div className='ml-5 whitespace-nowrap rounded-full overflow-clip shadow-smblock h-[30px] w-[30px] relative mr-3'>
+                        <Image src={Profile} alt='' layout='fill' objectFit='contain' objectPosition='left center'></Image>
+                      </div>
+                      <div className='text-tl-sm text-white flex items-center justify-center'>{name}</div>
+                    </Menu.Button>
+                  </div>
+                  <Transition
+                    as={Fragment}
+                    enter='transition ease-out duration-100'
+                    enterFrom='transform opacity-0 scale-95'
+                    enterTo='transform opacity-100 scale-100'
+                    leave='transition ease-in duration-75'
+                    leaveFrom='transform opacity-100 scale-100'
+                    leaveTo='transform opacity-0 scale-95'
+                  >
+                    <Menu.Items className='absolute right-0 mt-2 w-56 bg-white focus:outline-none drop-shadow-c shadow-none'>
+                      <Menu.Item>
+                        <div className='text-lb-lg text-black font-md px-[25px] py-[10px]'>Edit Profile</div>
+                      </Menu.Item>
+                      <Menu.Item>
+                        <div className='text-lb-lg text-blue font-md  px-[25px] py-[10px]'>Logout</div>
+                      </Menu.Item>
+                    </Menu.Items>
+                  </Transition>
+                </Menu>
+              ) : (
+                <div>
+                  <Link href='/auth/login'>
+                    <div className='ml-5 whitespace-nowrap inline-flex items-center justify-center px-5 py-[6px] w-[86px] rounded-md shadow-sm text-lb-sm font-normal text-white border-[1px] border-blue bg-blue hover:bg-blue-700 cursor-pointer'>
+                      Login
+                    </div>
+                  </Link>
+                  <Link href='/auth/register'>
+                    <div className='ml-5 whitespace-nowrap inline-flex items-center justify-center px-5 py-[6px] w-[86px] rounded-md shadow-sm text-lb-sm font-normal text-white border-[1px]  border-blue hover:bg-blue-700 cursor-pointer'>
+                      Register
+                    </div>
+                  </Link>
                 </div>
-              </Link>
-              <Link href='/auth/register'>
-                <div className='ml-5 whitespace-nowrap inline-flex items-center justify-center px-5 py-[6px] w-[86px] rounded-md shadow-sm text-lb-sm font-normal text-white border-[1px]  border-blue hover:bg-blue-700 cursor-pointer'>
-                  Register
-                </div>
-              </Link>
+              )}
             </div>
           </div>
         </div>

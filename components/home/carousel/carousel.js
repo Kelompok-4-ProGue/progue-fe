@@ -60,7 +60,7 @@ const Carousel = ({ children }) => {
         <div className={`rounded-full bg-blue p-[10px] absolute top-1/2 left-0 -translate-y-1/2 -translate-x-[120%] cursor-pointer ${realIndex === 0 ? 'bg-gray' : ''}`}>
           <ChevronLeftIcon className='chv-left h-11 w-11 stroke-white' ref={navigationPrevRef}></ChevronLeftIcon>
         </div>
-        <div className={`rounded-full bg-blue p-[10px] absolute top-1/2 right-0 -translate-y-1/2 translate-x-[120%] cursor-pointer ${realIndex === childrenArray.length - 1 ? 'bg-gray' : ''}`}>
+        <div className={`rounded-full bg-blue p-[10px] absolute top-1/2 right-0 -translate-y-1/2 translate-x-[120%] cursor-pointer ${realIndex === childrenArray.length - 1 || childrenArray.length === 0 ? 'bg-gray' : ''}`}>
           <ChevronRightIcon className='chv-right h-11 w-11 stroke-white' ref={navigationNextRef}></ChevronRightIcon>
         </div>
       </div>
