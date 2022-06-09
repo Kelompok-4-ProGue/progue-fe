@@ -1,5 +1,6 @@
 // next
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 // icons
 import { LocationMarkerIcon } from '@heroicons/react/solid';
@@ -13,29 +14,71 @@ Design and deliver wireframes, user stories, user journeys, and mockups optimize
 UI/UX maintenance and troubleshooting
 Adhere to style standards on fonts, colors and images and make sure all the design comply with brand guidelines`;
 
+// react
+import { useState, useCallback, useEffect } from 'react';
+
 const LowonganPekerjaanDetails = () => {
+  const router = useRouter();
+  const { id } = router.query;
+
+  const [jobData, setJobData] = useState({ description: '', requirement: '', additional_requirement: '' });
+
+  const getJob = useCallback(
+    async (id) => {
+      const requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+      };
+
+      const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-vacancy/${id}`, requestOptions);
+      const responeJson = await respone.json();
+
+      if (respone.ok) {
+        setJobData(responeJson.data);
+        console.log(responeJson.data);
+      } else {
+        console.log('error', responeJson);
+      }
+    },
+    [id]
+  );
+
+  useEffect(() => {
+    if (id) {
+      getJob(id);
+    }
+  }, [getJob, id]);
+
+  if (!id) {
+    return (
+      <div className='flex-auto bg-white drop-shadow-c ml-3 px-10 py-[50px] grid grid-cols-1 gap-[30px] '>
+        <div>Loading...</div>
+      </div>
+    );
+  }
+
   return (
     <div className='flex-auto bg-white drop-shadow-c ml-3 px-10 py-[50px] grid grid-cols-1 gap-[30px] '>
       {/* Head */}
       <div className='grid grid-cols-1 gap-[10px]'>
-        <div className={`px-[6px] py-1 text-gray bg-light-blue rounded w-fit`}>WFH</div>
+        <div className={`px-[6px] py-1 text-gray bg-light-blue rounded w-fit`}>{jobData.category}</div>
         <div className='block h-[50px] relative'>
           <Image src={DropBox} alt='' layout='fill' objectFit='contain' objectPosition='left center'></Image>
         </div>
-        <h1 className='text-tl-lg font-bold'>UI/UX Designer</h1>
-        <h2 className='text-tl-lg font-normal'>Dropbox</h2>
+        <h1 className='text-tl-lg font-bold'>{jobData.position}</h1>
+        <h2 className='text-tl-lg font-normal'>{jobData.company}</h2>
         <div className='flex items-center'>
           <LocationMarkerIcon className='fill-blue h-6 w-6 mr-[2px]'></LocationMarkerIcon>
-          <h3 className='text-tl-md font-medium w-full'>Jakarta, Indonesia</h3>
+          <h3 className='text-tl-md font-medium w-full'>{jobData.city}</h3>
         </div>
-        <p className='text-tl-md text-black font-medium'>5-10 Juta</p>
+        <p className='text-tl-md text-black font-medium'>{jobData.salary}</p>
       </div>
 
       {/* Desc */}
       <div className='grid grid-cols-1 gap-[10px]'>
         <h1 className='text-tl-lg font-bold'>Deskripsi Pekerjaan</h1>
         <ul className='list-disc ml-7'>
-          {detailPekjerjaan.split('\n').map((item, index) => (
+          {jobData.description.split('\n').map((item, index) => (
             <li key={index}>{item}</li>
           ))}
         </ul>
@@ -45,7 +88,7 @@ const LowonganPekerjaanDetails = () => {
       <div className='grid grid-cols-1 gap-[10px]'>
         <h1 className='text-tl-lg font-bold'>Requirements</h1>
         <ul className='list-disc ml-7'>
-          {detailPekjerjaan.split('\n').map((item, index) => (
+          {jobData.requirement.split('\n').map((item, index) => (
             <li key={index}>{item}</li>
           ))}
         </ul>

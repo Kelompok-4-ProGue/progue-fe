@@ -11,10 +11,36 @@ import LowonganPekerjaanDetails from '../../components/lowongan-pekerjaan/lowong
 // icons
 import { BriefcaseIcon, SearchIcon, LocationMarkerIcon, HomeIcon } from '@heroicons/react/solid';
 
+// react
+import { useState, useCallback, useEffect } from 'react';
+
 // data
-import jobs from '../../data/jobs';
+// import jobs from '../../data/jobs';
 
 const LowonganPekerjaan = () => {
+  const [jobsData, setJobsData] = useState([]);
+
+  const getJobs = useCallback(async () => {
+    const requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+    };
+
+    const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-vacancy`, requestOptions);
+    const responeJson = await respone.json();
+
+    if (respone.ok) {
+      setJobsData(responeJson.data);
+      console.log(responeJson.data);
+    } else {
+      console.log('error', responeJson);
+    }
+  }, []);
+
+  useEffect(() => {
+    getJobs();
+  }, [getJobs]);
+
   return (
     <div className='flex flex-col min-h-full items-center'>
       <Head>
@@ -66,8 +92,23 @@ const LowonganPekerjaan = () => {
           <div className='w-full max-w-ds h-full py-[50px] flex justify-center'>
             {/* Select */}
             <aside className='w-[343px] flex-none drop-shadow-c h-screen sticky top-16 overflow-auto mr-3 grid grid-cols-1 gap-5 rounded-[20px]'>
-              {jobs.map((job, index) => (
-                <LowonganPekerjaanItem key={index} id={job.id} title={job.title} company={job.company} companyIcon={job.companyIcon} location={job.location} workFrom={job.workFrom} salary={job.salary} createdAt={job.createdAt} />
+              {jobsData.map((job, index) => (
+                <LowonganPekerjaanItem
+                  key={index}
+                  additional_requirement={job.additional_requirement}
+                  category={job.category}
+                  city={job.city}
+                  company={job.company}
+                  company_id={job.company_id}
+                  created_at={job.created_at}
+                  description={job.description}
+                  id={job.id}
+                  position={job.position}
+                  requirement={job.requirement}
+                  salary={job.salary}
+                  updated_at={job.updated_at}
+                  onClick={() => setSelectedJob(job)}
+                />
               ))}
             </aside>
 
