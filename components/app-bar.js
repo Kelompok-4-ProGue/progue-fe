@@ -6,22 +6,42 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline';
 import Profile from '../assets/images/profile.png';
 // import useAuth from '../context/AuthContext';
 
-const AppBar = ({ menus, active, userData }) => {
-  // const { login, logout } = useAuth();
-  console.log(userData);
-
-  const [user, setUser] = useState(userData);
+const AppBar = ({ menus, active }) => {
+  const [user, setUser] = useState({});
   const [name, setName] = useState('');
 
-  useEffect(() => {
-    if (userData) {
-      setUser(userData);
-      console.log(userData.name);
-      setName(userData.name);
-    }
-  }, [userData]);
+  const getUser = useCallback(async () => {
+    const token = window.localStorage.getItem('token');
 
-  // {userData.role === 'company' ? userData.company.company_name : userData.job_finder.full_name}
+    const headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + token);
+
+    const requestOptions = {
+      method: 'GET',
+      headers: headers,
+    };
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/user`, requestOptions);
+      const responseJson = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseJson.message);
+      }
+
+      console.log(responseJson);
+
+      setUser(responseJson.data);
+      setName(responseJson.data.name);
+    } catch (error) {
+      setUser({});
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    getUser();
+  }, [getUser]);
 
   return (
     <>
@@ -82,7 +102,7 @@ const AppBar = ({ menus, active, userData }) => {
               })}
             </div>
             <div className='hidden md:flex items-center justify-end md:flex-1 lg:w-0'>
-              {user ? (
+              {!(JSON.stringify(user) === '{}') ? (
                 <Menu as='div' className='relative inline-block text-left'>
                   <div>
                     <Menu.Button className='flex items-center justify-end'>
@@ -103,10 +123,18 @@ const AppBar = ({ menus, active, userData }) => {
                   >
                     <Menu.Items className='absolute right-0 mt-2 w-56 bg-white focus:outline-none drop-shadow-c shadow-none'>
                       <Menu.Item>
-                        <div className='text-lb-lg text-black font-md px-[25px] py-[10px]'>Edit Profile</div>
+                        <div className='text-lb-lg text-black font-md px-[25px] py-[10px] cursor-pointer'>Edit Profile</div>
                       </Menu.Item>
                       <Menu.Item>
-                        <div className='text-lb-lg text-blue font-md  px-[25px] py-[10px]'>Logout</div>
+                        <div
+                          className='text-lb-lg text-blue font-md  px-[25px] py-[10px] cursor-pointer'
+                          onClick={() => {
+                            window.localStorage.removeItem('token');
+                            getUser();
+                          }}
+                        >
+                          Logout
+                        </div>
                       </Menu.Item>
                     </Menu.Items>
                   </Transition>

@@ -94,7 +94,7 @@ export default function Register() {
     } else {
       const urlencoded = new URLSearchParams();
       urlencoded.append('full_name', personalName);
-      urlencoded.append('birth_date', personalBirthday);
+      urlencoded.append('birth_date', personalBirthday + ' 0:0:0');
       urlencoded.append('email', personalEmail);
       urlencoded.append('password', personalPassword);
       urlencoded.append('password_confirmation', personalConfirmPassword);

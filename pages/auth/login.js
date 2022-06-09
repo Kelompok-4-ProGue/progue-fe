@@ -8,7 +8,7 @@ import Footer from '../../components/footer';
 import menus from '../../data/menus';
 import LoginGirl from '../../assets/images/login/login-girl.png';
 
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export default function Login() {
   const router = useRouter();
@@ -32,17 +32,52 @@ export default function Login() {
       redirect: 'follow',
     };
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/login`, requestOptions);
-    const responseJson = await response.json();
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/login`, requestOptions);
+      const responseJson = await response.json();
 
-    if (response.ok) {
-      window.localStorage.setItem('token', responseJson.token);
+      if (response.ok) {
+        console.log(responseJson);
 
-      router.push('/');
-    } else {
-      console.log('error', responseJson);
+        window.localStorage.setItem('token', responseJson.token);
+
+        router.push('/');
+      } else {
+        console.log('error', responseJson);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
+
+  const getUser = useCallback(async () => {
+    const token = window.localStorage.getItem('token');
+
+    const headers = new Headers();
+    headers.append('Authorization', 'Bearer ' + token);
+
+    const requestOptions = {
+      method: 'GET',
+      headers: headers,
+    };
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/user`, requestOptions);
+      const responseJson = await response.json();
+
+      if (!response.ok) {
+        throw new Error(responseJson.message);
+      }
+
+      router.push('/');
+    } catch (error) {
+      console.log('error', error);
+    }
+  }, [router]);
+
+  useEffect(() => {
+    getUser();
+  }, [getUser]);
 
   return (
     <div className='flex flex-col min-h-full items-center'>
