@@ -30,9 +30,8 @@ const PelatihanKerjaDetails = () => {
         const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-training/${id}`, requestOptions);
         const responeJson = await respone.json();
 
-        if (respone.ok) {
+        if (respone.ok && responeJson.data) {
           setData(responeJson.data);
-          console.log(responeJson.data);
         } else {
           console.log('error', responeJson);
         }

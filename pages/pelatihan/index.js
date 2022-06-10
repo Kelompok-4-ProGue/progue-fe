@@ -20,35 +20,47 @@ import pelatihan from '../../data/pelatihan';
 
 const PelatihanKerja = () => {
   const router = useRouter();
-  const routerParams = router.query;
+  const [id, setId] = useState(router.query.id);
 
   const [pelatihanData, setPelatihanData] = useState([]);
 
-  const getData = useCallback(async () => {
-    const requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
+  const getData = useCallback(
+    async (id) => {
+      const requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+      };
 
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-training`, requestOptions);
-      const responseJson = await response.json();
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-training`, requestOptions);
+        const responseJson = await response.json();
 
-      setPelatihanData(responseJson.data);
-      console.log(responseJson.data);
-
-      if (Object.keys(routerParams).length <= 0) {
-        router.push({
-          pathname: '/pelatihan',
-          query: { id: responseJson.data[0].id },
-        });
+        if (response.ok) {
+          setPelatihanData(responseJson.data);
+          console.log(responseJson.data);
+          if (!id && !window.location.search) {
+            console.log(id);
+            _setIdCallback(responseJson.data[0]);
+          }
+        } else {
+          console.log('error', responseJson);
+        }
+      } catch (error) {
+        console.log('error', error);
       }
-    } catch (error) {
-      console.log('error', error);
-    }
-  }, []);
+    },
+    [id]
+  );
+
+  const _setIdCallback = (data) => {
+    router.push({
+      pathname: 'pelatihan/',
+      query: { id: data.id },
+    });
+  };
 
   useEffect(() => {
+    setId(router.query.id);
     getData();
   }, [getData]);
 
@@ -123,7 +135,7 @@ const PelatihanKerja = () => {
             </aside>
 
             {/* Details */}
-            <PelatihanKerjaDetails />
+            <PelatihanKerjaDetails setIdCallback={_setIdCallback} />
           </div>
         </div>
       </main>

@@ -19,8 +19,10 @@ const PelatihanCarousel = () => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-training`, requestOptions);
       const responseJson = await response.json();
 
-      setPelatihanData(responseJson.data);
-      console.log(responseJson.data);
+      if (response.ok) {
+        setPelatihanData(responseJson.data);
+      }
+      console.log(responseJson);
     } catch (error) {
       console.log('error', error);
     }

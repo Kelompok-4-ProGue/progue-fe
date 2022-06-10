@@ -60,36 +60,44 @@ export default function Register() {
         redirect: 'follow',
       };
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/register/company`, requestOptions);
-      const responseJson = await response.json();
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/register/company`, requestOptions);
+        const responseJson = await response.json();
 
-      if (response.ok) {
-        const loginHeaders = new Headers();
-        headers.append('Accept', 'application/json');
+        if (response.ok) {
+          const loginHeaders = new Headers();
+          headers.append('Accept', 'application/json');
 
-        const urlencoded = new URLSearchParams();
-        urlencoded.append('email', companyEmail);
-        urlencoded.append('password', companyPassword);
+          const urlencoded = new URLSearchParams();
+          urlencoded.append('email', companyEmail);
+          urlencoded.append('password', companyPassword);
 
-        const loginRequestOptions = {
-          method: 'POST',
-          headers: loginHeaders,
-          body: urlencoded,
-          redirect: 'follow',
-        };
+          const loginRequestOptions = {
+            method: 'POST',
+            headers: loginHeaders,
+            body: urlencoded,
+            redirect: 'follow',
+          };
 
-        const responseLogin = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/login`, loginRequestOptions);
-        const responseLoginJson = await responseLogin.json();
+          try {
+            const responseLogin = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/login`, loginRequestOptions);
+            const responseLoginJson = await responseLogin.json();
 
-        if (responseLogin.ok) {
-          window.localStorage.setItem('token', responseLoginJson.token);
+            if (responseLogin.ok) {
+              window.localStorage.setItem('token', responseLoginJson.token);
 
-          router.push('/');
+              router.push('/');
+            } else {
+              console.log('error', responseLoginJson);
+            }
+          } catch (error) {
+            console.log(error);
+          }
         } else {
-          console.log('error', responseLoginJson);
+          console.log('error', responseJson);
         }
-      } else {
-        console.log('error', responseJson);
+      } catch (error) {
+        console.log(error);
       }
     } else {
       const urlencoded = new URLSearchParams();
@@ -105,36 +113,40 @@ export default function Register() {
         redirect: 'follow',
       };
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/register/job_finder`, requestOptions);
-      const responseJson = await response.json();
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/register/job_finder`, requestOptions);
+        const responseJson = await response.json();
 
-      if (response.ok) {
-        const loginHeaders = new Headers();
-        loginHeaders.append('Accept', 'application/json');
+        if (response.ok) {
+          const loginHeaders = new Headers();
+          loginHeaders.append('Accept', 'application/json');
 
-        const urlencoded = new URLSearchParams();
-        urlencoded.append('email', personalEmail);
-        urlencoded.append('password', personalPassword);
+          const urlencoded = new URLSearchParams();
+          urlencoded.append('email', personalEmail);
+          urlencoded.append('password', personalPassword);
 
-        const loginRequestOptions = {
-          method: 'POST',
-          headers: loginHeaders,
-          body: urlencoded,
-          redirect: 'follow',
-        };
+          const loginRequestOptions = {
+            method: 'POST',
+            headers: loginHeaders,
+            body: urlencoded,
+            redirect: 'follow',
+          };
 
-        const responseLogin = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/login`, loginRequestOptions);
-        const responseLoginJson = await responseLogin.json();
+          const responseLogin = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/login`, loginRequestOptions);
+          const responseLoginJson = await responseLogin.json();
 
-        if (responseLogin.ok) {
-          window.localStorage.setItem('token', responseLoginJson.token);
+          if (responseLogin.ok) {
+            window.localStorage.setItem('token', responseLoginJson.token);
 
-          router.push('/');
+            router.push('/');
+          } else {
+            console.log('error', responseLoginJson);
+          }
         } else {
-          console.log('error', responseLoginJson);
+          console.log('error', responseJson);
         }
-      } else {
-        console.log('error', responseJson);
+      } catch (error) {
+        console.log(error);
       }
     }
   };

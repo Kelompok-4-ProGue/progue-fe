@@ -16,14 +16,18 @@ const LowonganPekerjaanCarousel = () => {
       redirect: 'follow',
     };
 
-    const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-vacancy`, requestOptions);
-    const responeJson = await respone.json();
+    try {
+      const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-vacancy`, requestOptions);
+      const responeJson = await respone.json();
 
-    if (respone.ok) {
-      setJobsData(responeJson.data);
-      console.log(responeJson.data);
-    } else {
-      console.log('error', responeJson);
+      if (respone.ok) {
+        setJobsData(responeJson.data);
+        console.log(responeJson.data);
+      } else {
+        console.log('error', responeJson);
+      }
+    } catch (error) {
+      console.log('error', error);
     }
   }, []);
 

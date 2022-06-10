@@ -1,5 +1,6 @@
 // next
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 // custom components
 import AppBar from '../../components/app-bar';
@@ -14,28 +15,48 @@ import { BriefcaseIcon, SearchIcon, LocationMarkerIcon, HomeIcon } from '@heroic
 // react
 import { useState, useCallback, useEffect } from 'react';
 
-// data
-// import jobs from '../../data/jobs';
-
 const LowonganPekerjaan = () => {
+  const router = useRouter();
+  const { id } = router.query;
+
   const [jobsData, setJobsData] = useState([]);
 
-  const getJobs = useCallback(async () => {
-    const requestOptions = {
-      method: 'GET',
-      redirect: 'follow',
-    };
+  const getJobs = useCallback(
+    async (id) => {
+      const requestOptions = {
+        method: 'GET',
+        redirect: 'follow',
+      };
 
-    const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-vacancy`, requestOptions);
-    const responeJson = await respone.json();
+      try {
+        const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-vacancy`, requestOptions);
+        const responseJson = await respone.json();
 
-    if (respone.ok) {
-      setJobsData(responeJson.data);
-      console.log(responeJson.data);
-    } else {
-      console.log('error', responeJson);
-    }
-  }, []);
+        if (respone.ok) {
+          setJobsData(responseJson.data);
+          console.log(responseJson.data);
+          if (!id && !window.location.search) {
+            console.log(id);
+            _setIdCallback(responseJson.data[0]);
+          }
+        } else {
+          console.log('error', responseJson);
+        }
+      } catch (error) {
+        console.log('error', error);
+      }
+    },
+    [id]
+  );
+
+  const _setIdCallback = (data) => {
+    console.log('_setIdCallback called');
+    console.log(data);
+    router.push({
+      pathname: 'lowongan-pekerjaan/',
+      query: { id: data.id },
+    });
+  };
 
   useEffect(() => {
     getJobs();
