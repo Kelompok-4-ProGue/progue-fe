@@ -7,33 +7,47 @@ import { useState, useEffect, useCallback } from 'react';
 import pelatihan from '../../../data/pelatihan';
 
 const PelatihanCarousel = () => {
-  // const [pelatihanData, setPelatihanData] = useState([]);
+  const [pelatihanData, setPelatihanData] = useState([]);
 
-  // const getData = useCallback(async () => {
-  //   const requestOptions = {
-  //     method: 'GET',
-  //     redirect: 'follow',
-  //   };
+  const getData = useCallback(async () => {
+    const requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+    };
 
-  //   try {
-  //     const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-training`, requestOptions);
-  //     const responseJson = await response.json();
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-training`, requestOptions);
+      const responseJson = await response.json();
 
-  //     setPelatihanData(responseJson.data);
-  //     console.log(responseJson.data);
-  //   } catch (error) {
-  //     console.log('error', error);
-  //   }
-  // }, []);
+      setPelatihanData(responseJson.data);
+      console.log(responseJson.data);
+    } catch (error) {
+      console.log('error', error);
+    }
+  }, []);
 
-  // useEffect(() => {
-  //   getData();
-  // }, [getData]);
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   return (
     <Carousel>
-      {pelatihan.map((item, index) => (
-        <PelatihanItem key={index} id={item.id} title={item.title} courseOwner={item.courseOwner} courseOwnerIcon={item.courseOwnerIcon} createdAt={item.createdAt} price={item.price} location={item.location} online={item.online} />
+      {pelatihanData.map((item, index) => (
+        <PelatihanItem
+          key={index}
+          id={item.id}
+          company_id={item.company_id}
+          title={item.title}
+          description={item.description}
+          requirement={item.requirement}
+          additional_requirement={item.additional_requirement}
+          city={item.city}
+          price={item.price}
+          is_online={item.is_online}
+          created_at={item.created_at}
+          updated_at={item.updated_at}
+          company={item.company}
+        />
       ))}
     </Carousel>
   );

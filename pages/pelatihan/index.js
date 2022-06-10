@@ -11,10 +11,36 @@ import PelatihanKerjaDetails from '../../components/pelatihan/pelatihan-kerja-de
 // icons
 import { BriefcaseIcon, SearchIcon, LocationMarkerIcon, HomeIcon } from '@heroicons/react/solid';
 
+// react
+import { useState, useCallback, useEffect } from 'react';
+
 // data
 import pelatihan from '../../data/pelatihan';
 
 const PelatihanKerja = () => {
+  const [pelatihanData, setPelatihanData] = useState([]);
+
+  const getData = useCallback(async () => {
+    const requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+    };
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-training`, requestOptions);
+      const responseJson = await response.json();
+
+      setPelatihanData(responseJson.data);
+      console.log(responseJson.data);
+    } catch (error) {
+      console.log('error', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
+
   return (
     <div className='flex flex-col min-h-full items-center'>
       <Head>
@@ -66,17 +92,21 @@ const PelatihanKerja = () => {
           <div className='w-full max-w-ds h-full py-[50px] flex justify-center'>
             {/* Select */}
             <aside className='w-[343px] flex-none drop-shadow-c h-screen sticky top-16 overflow-auto mr-3 grid grid-cols-1 gap-5 rounded-[20px]'>
-              {pelatihan.map((item, index) => (
+              {pelatihanData.map((item, index) => (
                 <PelatihanKerjaItem
                   key={index}
                   id={item.id}
+                  company_id={item.company_id}
                   title={item.title}
-                  courseOwner={item.courseOwner}
-                  courseOwnerIcon={item.courseOwnerIcon}
-                  createdAt={item.createdAt}
+                  description={item.description}
+                  requirement={item.requirement}
+                  additional_requirement={item.additional_requirement}
+                  city={item.city}
                   price={item.price}
-                  location={item.location}
-                  online={item.online}
+                  is_online={item.is_online}
+                  created_at={item.created_at}
+                  updated_at={item.updated_at}
+                  company={item.company}
                 />
               ))}
             </aside>
