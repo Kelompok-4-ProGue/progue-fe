@@ -46,9 +46,9 @@ export default function Register() {
       headers.append('Accept', 'application/json');
 
       const formdata = new FormData();
-      formdata.append('company_name', companyName);
-      formdata.append('company_address', companyAddress);
-      formdata.append('company_letter', fileInputRef.current.files[0], companySiupName);
+      formdata.append('name', companyName);
+      formdata.append('address', companyAddress);
+      formdata.append('letter', fileInputRef.current.files[0], companySiupName);
       formdata.append('email', companyEmail);
       formdata.append('password', companyPassword);
       formdata.append('password_confirmation', companyConfirmPassword);
@@ -93,7 +93,7 @@ export default function Register() {
       }
     } else {
       const urlencoded = new URLSearchParams();
-      urlencoded.append('full_name', personalName);
+      urlencoded.append('name', personalName);
       urlencoded.append('birth_date', personalBirthday + ' 0:0:0');
       urlencoded.append('email', personalEmail);
       urlencoded.append('password', personalPassword);

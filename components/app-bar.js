@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Popover, Transition, Menu } from '@headlessui/react';
 import { MenuIcon, XIcon } from '@heroicons/react/outline';
+import { UserCircleIcon } from '@heroicons/react/solid';
 import Profile from '../assets/images/profile.png';
 // import useAuth from '../context/AuthContext';
 
@@ -11,31 +12,41 @@ const AppBar = ({ menus, active }) => {
   const [name, setName] = useState('');
 
   const getUser = useCallback(async () => {
-    const token = window.localStorage.getItem('token');
+    const userLocal = window.sessionStorage.getItem('user');
 
-    const headers = new Headers();
-    headers.append('Authorization', 'Bearer ' + token);
+    if (!userLocal) {
+      const token = window.localStorage.getItem('token');
 
-    const requestOptions = {
-      method: 'GET',
-      headers: headers,
-    };
+      const headers = new Headers();
+      headers.append('Authorization', 'Bearer ' + token);
 
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/user`, requestOptions);
-      const responseJson = await response.json();
+      const requestOptions = {
+        method: 'GET',
+        headers: headers,
+      };
 
-      if (!response.ok) {
-        throw new Error(responseJson.message);
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/user`, requestOptions);
+        const responseJson = await response.json();
+
+        if (!response.ok) {
+          throw new Error(responseJson.message);
+        }
+
+        console.log(responseJson);
+
+        setUser(responseJson.data);
+        setName(responseJson.data.name);
+
+        window.sessionStorage.setItem('user', JSON.stringify(responseJson.data));
+      } catch (error) {
+        setUser({});
+        console.log(error);
       }
-
-      console.log(responseJson);
-
-      setUser(responseJson.data);
-      setName(responseJson.data.name);
-    } catch (error) {
-      setUser({});
-      console.log(error);
+    } else {
+      const userLocalJson = JSON.parse(userLocal);
+      setUser(userLocalJson);
+      setName(userLocalJson.name);
     }
   }, []);
 
@@ -107,7 +118,7 @@ const AppBar = ({ menus, active }) => {
                   <div>
                     <Menu.Button className='flex items-center justify-end'>
                       <div className='ml-5 whitespace-nowrap rounded-full overflow-clip shadow-smblock h-[30px] w-[30px] relative mr-3'>
-                        <Image src={Profile} alt='' layout='fill' objectFit='contain' objectPosition='left center'></Image>
+                        {user.photo ? <Image src={user.photo} alt='' layout='fill' objectFit='contain' objectPosition='left center'></Image> : <UserCircleIcon className='h-full'></UserCircleIcon>}
                       </div>
                       <div className='text-tl-sm text-white flex items-center justify-center'>{name}</div>
                     </Menu.Button>

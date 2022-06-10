@@ -1,5 +1,6 @@
 // next
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 // custom components
 import AppBar from '../../components/app-bar';
@@ -18,6 +19,9 @@ import { useState, useCallback, useEffect } from 'react';
 import pelatihan from '../../data/pelatihan';
 
 const PelatihanKerja = () => {
+  const router = useRouter();
+  const routerParams = router.query;
+
   const [pelatihanData, setPelatihanData] = useState([]);
 
   const getData = useCallback(async () => {
@@ -32,6 +36,13 @@ const PelatihanKerja = () => {
 
       setPelatihanData(responseJson.data);
       console.log(responseJson.data);
+
+      if (Object.keys(routerParams).length <= 0) {
+        router.push({
+          pathname: '/pelatihan',
+          query: { id: responseJson.data[0].id },
+        });
+      }
     } catch (error) {
       console.log('error', error);
     }

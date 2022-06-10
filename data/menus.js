@@ -5,11 +5,11 @@ const menus = [
   },
   {
     label: 'Loker',
-    href: '/lowongan-pekerjaan',
+    href: '/lowongan-pekerjaan?id=_',
   },
   {
     label: 'Pelatihan',
-    href: '/pelatihan',
+    href: '/pelatihan?id=_',
   },
   {
     label: 'CV Maker',
