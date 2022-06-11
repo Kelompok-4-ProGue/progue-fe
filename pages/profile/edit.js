@@ -28,6 +28,10 @@ const FormLamar = () => {
   const [preview2, setPreview2] = useState(null);
 
   const getUser = useCallback(async () => {
+    const userLocal = window.sessionStorage.getItem('user');
+    const userLocalJson = JSON.parse(userLocal);
+    setUser(userLocalJson);
+
     const token = window.localStorage.getItem('token');
 
     const headers = new Headers();
@@ -50,7 +54,16 @@ const FormLamar = () => {
 
       setUser(responseJson.data);
 
-      window.sessionStorage.setItem('user', JSON.stringify({ name: responseJson.data.name, photo: responseJson.data.photo }));
+      window.sessionStorage.setItem(
+        'user',
+        JSON.stringify({
+          name: responseJson.data.name,
+          photo: responseJson.data.photo,
+          role: responseJson.data.role,
+          company_logo_small: responseJson.data.company_logo_small,
+          company_logo_big: responseJson.data.company_logo_big,
+        })
+      );
     } catch (error) {
       setUser({});
       router.push('/auth/login');

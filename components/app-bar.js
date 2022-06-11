@@ -38,7 +38,16 @@ const AppBar = ({ menus, active }) => {
         setUser(responseJson.data);
         setName(responseJson.data.name);
 
-        window.sessionStorage.setItem('user', JSON.stringify({ name: responseJson.data.name, photo: responseJson.data.photo }));
+        window.sessionStorage.setItem(
+          'user',
+          JSON.stringify({
+            name: responseJson.data.name,
+            photo: responseJson.data.photo,
+            role: responseJson.data.role,
+            company_logo_small: responseJson.data.company_logo_small,
+            company_logo_big: responseJson.data.company_logo_big,
+          })
+        );
       } catch (error) {
         setUser({});
         console.log(error);
@@ -118,7 +127,7 @@ const AppBar = ({ menus, active }) => {
                   <div>
                     <Menu.Button className='flex items-center justify-end'>
                       <div className='ml-5 whitespace-nowrap rounded-full overflow-clip shadow-smblock h-[30px] w-[30px] relative mr-3'>
-                        {user.photo ? <Image src={user.photo} alt='' layout='fill' objectFit='contain' objectPosition='left center'></Image> : <UserCircleIcon className='h-full'></UserCircleIcon>}
+                        {user.photo ?? user.company_logo_small ? <Image src={user.photo ?? user.company_logo_small} alt='' layout='fill' objectFit='contain'></Image> : <UserCircleIcon className='h-full'></UserCircleIcon>}
                       </div>
                       <div className='text-tl-sm text-white flex items-center justify-center'>{name}</div>
                     </Menu.Button>
@@ -138,6 +147,15 @@ const AppBar = ({ menus, active }) => {
                           <div className='text-lb-lg text-black font-md px-[25px] py-[10px] cursor-pointer'>Edit Profile</div>
                         </Link>
                       </Menu.Item>
+                      {user.role === 'company' ? (
+                        <Menu.Item>
+                          <Link href='/profile/lowongan-pekerjaan'>
+                            <div className='text-lb-lg text-black font-md px-[25px] py-[10px] cursor-pointer'>Lowongan Pekerjaan</div>
+                          </Link>
+                        </Menu.Item>
+                      ) : (
+                        <></>
+                      )}
                       <Menu.Item>
                         <div
                           className='text-lb-lg text-blue font-md  px-[25px] py-[10px] cursor-pointer'
