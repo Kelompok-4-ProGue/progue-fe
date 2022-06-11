@@ -38,7 +38,7 @@ const AppBar = ({ menus, active }) => {
         setUser(responseJson.data);
         setName(responseJson.data.name);
 
-        window.sessionStorage.setItem('user', JSON.stringify(responseJson.data));
+        window.sessionStorage.setItem('user', JSON.stringify({ name: responseJson.data.name, photo: responseJson.data.photo }));
       } catch (error) {
         setUser({});
         console.log(error);
@@ -134,14 +134,18 @@ const AppBar = ({ menus, active }) => {
                   >
                     <Menu.Items className='absolute right-0 mt-2 w-56 bg-white focus:outline-none drop-shadow-c shadow-none'>
                       <Menu.Item>
-                        <div className='text-lb-lg text-black font-md px-[25px] py-[10px] cursor-pointer'>Edit Profile</div>
+                        <Link href='/profile/edit'>
+                          <div className='text-lb-lg text-black font-md px-[25px] py-[10px] cursor-pointer'>Edit Profile</div>
+                        </Link>
                       </Menu.Item>
                       <Menu.Item>
                         <div
                           className='text-lb-lg text-blue font-md  px-[25px] py-[10px] cursor-pointer'
                           onClick={() => {
                             window.localStorage.removeItem('token');
-                            getUser();
+                            window.sessionStorage.removeItem('user');
+                            setUser({});
+                            setName('');
                           }}
                         >
                           Logout
@@ -177,7 +181,7 @@ const AppBar = ({ menus, active }) => {
                   <div>
                     <h1 className='text-3xl font-bold'>
                       <span className='box-decoration-slice bg-gradient-to-r from-blue-600 to-pink-500 text-white py-1 px-3 rounded-md' href='https://nextjs.org'>
-                        Musically
+                        Progue
                       </span>
                     </h1>
                   </div>

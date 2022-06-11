@@ -122,7 +122,7 @@ export default function Login() {
                     }}
                   />
                 </div>
-                <div className='flex items-center justify-between w-full mb-[19px]'>
+                {/* <div className='flex items-center justify-between w-full mb-[19px]'>
                   <div className='form-check'>
                     <input
                       type='checkbox'
@@ -133,8 +133,8 @@ export default function Login() {
                       Ingat Saya
                     </label>
                   </div>
-                  {/* <Link href='/'>Lupa Password</Link> */}
-                </div>
+                  <Link href='/'>Lupa Password</Link>
+                </div> */}
                 <div className='flex items-center justify-center w-full mb-[19px]'>
                   <button className='bg-blue text-white font-bold py-[15px] px-[25px] rounded-[10px] hover:bg-blue-dark focus:outline-none focus:shadow-outline w-full' onClick={handleSubmit}>
                     Masuk

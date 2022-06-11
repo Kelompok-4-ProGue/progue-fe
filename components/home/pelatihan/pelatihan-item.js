@@ -11,6 +11,7 @@ import DropBox from '../../../assets/images/home/company-logo/Adobe.svg';
 import PelatihanImg from '../../../assets/images/home/pelatihan/pelatihan-1.png';
 
 const PelatihanCarousel = ({ id, company_id, title, description, requirement, additional_requirement, city, price, is_online, created_at, updated_at, company }) => {
+  console.log(`${process.env.NEXT_PUBLIC_API_BASE}/${company.company_logo_big}`);
   return (
     <Link href={{ pathname: 'pelatihan/', query: { id } }}>
       <div className='p-5 bg-white rounded-[20px] mb-[-10px] flex flex-col justify-between cursor-pointer'>
@@ -32,7 +33,7 @@ const PelatihanCarousel = ({ id, company_id, title, description, requirement, ad
         </div>
         <div className='flex justify-between items-center '>
           <div className='flex-auto block h-[30px] w-full relative'>
-            <Image src={DropBox} alt='' layout='fill' objectFit='contain' objectPosition='left center'></Image>
+            <Image src={`${process.env.NEXT_PUBLIC_API_BASE}/${company.company_logo_big}`} alt='' layout='fill' objectFit='contain' objectPosition='left center'></Image>
           </div>
           <p className='text-lb-md text-gray flex-none'>{timeSince(new Date(created_at))}</p>
         </div>
