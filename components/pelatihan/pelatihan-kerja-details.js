@@ -19,28 +19,25 @@ const PelatihanKerjaDetails = () => {
 
   const [data, setData] = useState({ description: '', requirement: '', additional_requirement: '' });
 
-  const getJob = useCallback(
-    async (id) => {
-      const requestOptions = {
-        method: 'GET',
-        redirect: 'follow',
-      };
+  const getJob = useCallback(async (id) => {
+    const requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+    };
 
-      try {
-        const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/job-training/${id}`, requestOptions);
-        const responeJson = await respone.json();
+    try {
+      const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/job-training/${id}`, requestOptions);
+      const responeJson = await respone.json();
 
-        if (respone.ok && responeJson.data) {
-          setData(responeJson.data);
-        } else {
-          console.log('error', responeJson);
-        }
-      } catch (error) {
-        console.log('error', error);
+      if (respone.ok && responeJson.data) {
+        setData(responeJson.data);
+      } else {
+        console.log('error', responeJson);
       }
-    },
-    [id]
-  );
+    } catch (error) {
+      console.log('error', error);
+    }
+  }, []);
 
   useEffect(() => {
     if (id) {
