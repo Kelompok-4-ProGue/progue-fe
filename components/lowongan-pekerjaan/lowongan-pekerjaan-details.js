@@ -27,7 +27,7 @@ const LowonganPekerjaanDetails = () => {
       };
 
       try {
-        const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-vacancy/${id}`, requestOptions);
+        const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/job-vacancy/${id}`, requestOptions);
         const responeJson = await respone.json();
 
         if (respone.ok) {

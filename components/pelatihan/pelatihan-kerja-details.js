@@ -27,7 +27,7 @@ const PelatihanKerjaDetails = () => {
       };
 
       try {
-        const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-training/${id}`, requestOptions);
+        const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/job-training/${id}`, requestOptions);
         const responeJson = await respone.json();
 
         if (respone.ok && responeJson.data) {

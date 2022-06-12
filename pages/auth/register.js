@@ -61,7 +61,7 @@ export default function Register() {
       };
 
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/register/company`, requestOptions);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/register/company`, requestOptions);
         const responseJson = await response.json();
 
         if (response.ok) {
@@ -80,7 +80,7 @@ export default function Register() {
           };
 
           try {
-            const responseLogin = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/login`, loginRequestOptions);
+            const responseLogin = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/login`, loginRequestOptions);
             const responseLoginJson = await responseLogin.json();
 
             if (responseLogin.ok) {
@@ -114,7 +114,7 @@ export default function Register() {
       };
 
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/register/job_finder`, requestOptions);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/register/job_finder`, requestOptions);
         const responseJson = await response.json();
 
         if (response.ok) {
@@ -132,7 +132,7 @@ export default function Register() {
             redirect: 'follow',
           };
 
-          const responseLogin = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/login`, loginRequestOptions);
+          const responseLogin = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/login`, loginRequestOptions);
           const responseLoginJson = await responseLogin.json();
 
           if (responseLogin.ok) {

@@ -33,7 +33,7 @@ export default function Login() {
     };
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/login`, requestOptions);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/login`, requestOptions);
       const responseJson = await response.json();
 
       if (response.ok) {
@@ -62,7 +62,7 @@ export default function Login() {
     };
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/user`, requestOptions);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/user`, requestOptions);
       const responseJson = await response.json();
 
       if (!response.ok) {

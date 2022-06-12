@@ -17,7 +17,7 @@ const LowonganPekerjaanCarousel = () => {
     };
 
     try {
-      const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-vacancy`, requestOptions);
+      const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/job-vacancy`, requestOptions);
       const responeJson = await respone.json();
 
       if (respone.ok) {

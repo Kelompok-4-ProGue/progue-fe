@@ -1,6 +1,6 @@
 // next
 import Head from 'next/head';
-import Image from 'next/image';
+// import Image from 'next/image';
 
 // custom components
 import AppBar from '../../components/app-bar';
@@ -43,7 +43,7 @@ const FormLamar = () => {
     };
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/user`, requestOptions);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/user`, requestOptions);
       const responseJson = await response.json();
 
       if (!response.ok) {
@@ -83,12 +83,12 @@ const FormLamar = () => {
 
       const formData = new FormData();
       if (role === 'company') {
-        formData.append('company_logo_small', imageLocal);
-        formData.append('company_logo_big', imageLocal2);
+        formData.append('company_logo_small', imageLocal, imageLocal.name);
+        formData.append('company_logo_big', imageLocal2, imageLocal2.name);
         formData.append('company_name', comapny_name);
       }
       if (role === 'job_finder') {
-        formData.append('photo', imageLocal);
+        formData.append('photo', imageLocal, imageLocal.name);
         formData.append('birth_place', birth_place);
         formData.append('birth_date', `${birthDate}-${birthMonth}-${birthYear}`);
       }
@@ -101,12 +101,12 @@ const FormLamar = () => {
       formData.append('website', website);
 
       const requestOptions = {
-        method: 'GET',
+        method: 'POST',
         headers: headers,
       };
 
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/user`, requestOptions);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/user`, requestOptions);
         const responseJson = await response.json();
 
         if (!response.ok) {
@@ -166,9 +166,9 @@ const FormLamar = () => {
               <div className='flex justify-center items-center w-full'>
                 <label htmlFor='dropzone-profile-pic' className='px-[25px] py-[15px] bg-light-blue text-blue rounded-[10px] cursor-pointer h-48 w-48 border-2 border-dashed border-blue relative'>
                   {user.photo ?? user.company_logo_small ? (
-                    <Image src={user.photo ?? user.company_logo_small} alt='' layout='fill' objectFit='cover'></Image>
+                    <img src={user.photo ?? user.company_logo_small} alt='' layout='fill' objectFit='cover'></img>
                   ) : preview ? (
-                    <Image src={preview} alt='' layout='fill' objectFit='cover'></Image>
+                    <img src={preview} alt='' layout='fill' objectFit='cover'></img>
                   ) : (
                     <div className='flex flex-col items-center justify-center h-full'>
                       <UserIcon className='h-7 w-7 stroke-blue'></UserIcon>
@@ -192,9 +192,9 @@ const FormLamar = () => {
                 {user.role === 'company' ? (
                   <label htmlFor='dropzone-profile-pic2' className='px-[25px] py-[15px] bg-light-blue text-blue rounded-[10px] cursor-pointer h-48 w-[324px] border-2 border-dashed border-blue relative ml-[30px]'>
                     {user.company_logo_big ? (
-                      <Image src={user.company_logo_big} alt='' layout='fill' objectFit='cover'></Image>
+                      <img src={user.company_logo_big} alt='' layout='fill' objectFit='cover'></img>
                     ) : preview2 ? (
-                      <Image src={preview2} alt='' layout='fill' objectFit='cover'></Image>
+                      <img src={preview2} alt='' layout='fill' objectFit='cover'></img>
                     ) : (
                       <div className='flex flex-col items-center justify-center h-full'>
                         <UserIcon className='h-7 w-7 stroke-blue'></UserIcon>

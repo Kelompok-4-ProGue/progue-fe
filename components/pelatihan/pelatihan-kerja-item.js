@@ -24,7 +24,7 @@ const PelatihanKerjaItem = ({ id, company_id, title, description, requirement, a
         <p className='text-tl-sm font-bold pb-[10px]'>Rp{addDotEveryThreeDigits(price)}</p>
         <div className='flex justify-between items-center'>
           <div className='flex-auto block h-[30px] w-full relative'>
-            <Image src={DropBox} alt='' layout='fill' objectFit='contain' objectPosition='left center'></Image>
+            <img src={`${process.env.NEXT_PUBLIC_API_BASE}/${company.company_logo_big}`} className='h-[30px]' alt={`${company} logo`}></img>
           </div>
           <p className='text-lb-md text-gray flex-none'>{timeSince(new Date(created_at))}</p>
         </div>

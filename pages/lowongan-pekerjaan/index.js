@@ -29,7 +29,7 @@ const LowonganPekerjaan = () => {
       };
 
       try {
-        const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-vacancy`, requestOptions);
+        const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/job-vacancy`, requestOptions);
         const responseJson = await respone.json();
 
         if (respone.ok) {

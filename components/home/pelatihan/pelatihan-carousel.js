@@ -16,7 +16,7 @@ const PelatihanCarousel = () => {
     };
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/job-training`, requestOptions);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/job-training`, requestOptions);
       const responseJson = await response.json();
 
       if (response.ok) {
