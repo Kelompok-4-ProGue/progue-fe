@@ -21,7 +21,7 @@ const Carousel = ({ children }) => {
     let arr = [];
     for (let i = 0; i < _children.length && i < 18; i++) {
       arr.push(_children[i]);
-      if (arr.length === 6) {
+      if (arr.length === 6 || i === _children.length - 1) {
         arrays.push(arr);
         arr = [];
       }
@@ -31,6 +31,7 @@ const Carousel = ({ children }) => {
 
   useEffect(() => {
     setChildrenArray(spliter(children));
+    console.log(children);
   }, [children]);
 
   return (

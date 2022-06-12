@@ -100,14 +100,18 @@ const PelatihanKerjaDetails = () => {
         </div>
 
         {/* Additional Requirements */}
-        <div className='grid grid-cols-1 gap-[10px]'>
-          <h1 className='text-tl-lg font-bold'>Additional Requirements</h1>
-          <ul className='list-disc ml-7'>
-            {data.additional_requirement.split('\n').map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
-        </div>
+        {data.additional_requirement ? (
+          <div className='grid grid-cols-1 gap-[10px]'>
+            <h1 className='text-tl-lg font-bold'>Additional Requirements</h1>
+            <ul className='list-disc ml-7'>
+              {data.additional_requirement.split('\n').map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <></>
+        )}
 
         {/* Daftar */}
         <div className='flex justify-center'>

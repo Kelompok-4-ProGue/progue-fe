@@ -94,14 +94,18 @@ const LowonganPekerjaanDetails = () => {
         </div>
 
         {/* Additional Requirements */}
-        <div className='grid grid-cols-1 gap-[10px]'>
-          <h1 className='text-tl-lg font-bold'>Additional Requirements</h1>
-          <ul className='list-disc ml-7'>
-            {jobData.additional_requirement.split('\n').map((item, index) => (
-              <li key={index}>{item}</li>
-            ))}
-          </ul>
-        </div>
+        {jobData.additional_requirement ? (
+          <div className='grid grid-cols-1 gap-[10px]'>
+            <h1 className='text-tl-lg font-bold'>Additional Requirements</h1>
+            <ul className='list-disc ml-7'>
+              {jobData.additional_requirement.split('\n').map((item, index) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <></>
+        )}
 
         {/* Image */}
         <div className='block h-[315px] relative rounded-[10px] overflow-clip'>
