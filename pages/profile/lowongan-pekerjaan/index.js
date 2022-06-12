@@ -16,10 +16,6 @@ export default function Home() {
   const router = useRouter();
 
   const getUser = useCallback(async () => {
-    const userLocal = window.sessionStorage.getItem('user');
-    const userLocalJson = JSON.parse(userLocal);
-    setUser(userLocalJson);
-
     const token = window.localStorage.getItem('token');
 
     const headers = new Headers();

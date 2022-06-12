@@ -1,6 +1,6 @@
 // next
 import Head from 'next/head';
-// import Image from 'next/image';
+import Image from 'next/image';
 
 // custom components
 import AppBar from '../../components/app-bar';
@@ -85,7 +85,7 @@ const FormLamar = () => {
       if (role === 'company') {
         formData.append('company_logo_small', imageLocal, imageLocal.name);
         formData.append('company_logo_big', imageLocal2, imageLocal2.name);
-        formData.append('company_name', comapny_name);
+        formData.append('name', comapny_name);
       }
       if (role === 'job_finder') {
         formData.append('photo', imageLocal, imageLocal.name);
@@ -166,9 +166,9 @@ const FormLamar = () => {
               <div className='flex justify-center items-center w-full'>
                 <label htmlFor='dropzone-profile-pic' className='px-[25px] py-[15px] bg-light-blue text-blue rounded-[10px] cursor-pointer h-48 w-48 border-2 border-dashed border-blue relative'>
                   {user.photo ?? user.company_logo_small ? (
-                    <img src={user.photo ?? user.company_logo_small} alt='' layout='fill' objectFit='cover'></img>
+                    <Image src={user.photo ?? user.company_logo_small} alt='' layout='fill' objectFit='cover'></Image>
                   ) : preview ? (
-                    <img src={preview} alt='' layout='fill' objectFit='cover'></img>
+                    <Image src={preview} alt='' layout='fill' objectFit='cover'></Image>
                   ) : (
                     <div className='flex flex-col items-center justify-center h-full'>
                       <UserIcon className='h-7 w-7 stroke-blue'></UserIcon>
@@ -192,9 +192,9 @@ const FormLamar = () => {
                 {user.role === 'company' ? (
                   <label htmlFor='dropzone-profile-pic2' className='px-[25px] py-[15px] bg-light-blue text-blue rounded-[10px] cursor-pointer h-48 w-[324px] border-2 border-dashed border-blue relative ml-[30px]'>
                     {user.company_logo_big ? (
-                      <img src={user.company_logo_big} alt='' layout='fill' objectFit='cover'></img>
+                      <Image src={user.company_logo_big} alt='' layout='fill' objectFit='cover'></Image>
                     ) : preview2 ? (
-                      <img src={preview2} alt='' layout='fill' objectFit='cover'></img>
+                      <Image src={preview2} alt='' layout='fill' objectFit='cover'></Image>
                     ) : (
                       <div className='flex flex-col items-center justify-center h-full'>
                         <UserIcon className='h-7 w-7 stroke-blue'></UserIcon>
@@ -227,9 +227,9 @@ const FormLamar = () => {
                   placeholder='Nama Perusahaan'
                   type='text'
                   className='input-text'
-                  value={user.address ?? ''}
+                  value={user.name ?? ''}
                   onChange={(event) => {
-                    setUser({ ...user, address: event.target.value });
+                    setUser({ ...user, name: event.target.value });
                   }}
                 />
               ) : (

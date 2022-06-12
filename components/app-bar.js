@@ -14,7 +14,7 @@ const AppBar = ({ menus, active }) => {
   const getUser = useCallback(async () => {
     const userLocal = window.sessionStorage.getItem('user');
 
-    if (!userLocal) {
+    if (!userLocal || !userLocal.name) {
       const token = window.localStorage.getItem('token');
 
       const headers = new Headers();

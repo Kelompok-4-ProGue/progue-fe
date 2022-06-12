@@ -1,6 +1,7 @@
 // next
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 // icons
 import { LocationMarkerIcon } from '@heroicons/react/solid';
@@ -19,29 +20,26 @@ const LowonganPekerjaanDetails = () => {
 
   const [jobData, setJobData] = useState({ description: '', requirement: '', additional_requirement: '' });
 
-  const getJob = useCallback(
-    async (id) => {
-      const requestOptions = {
-        method: 'GET',
-        redirect: 'follow',
-      };
+  const getJob = useCallback(async (id) => {
+    const requestOptions = {
+      method: 'GET',
+      redirect: 'follow',
+    };
 
-      try {
-        const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/job-vacancy/${id}`, requestOptions);
-        const responeJson = await respone.json();
+    try {
+      const respone = await fetch(`${process.env.NEXT_PUBLIC_API_BASE}/api/job-vacancy/${id}`, requestOptions);
+      const responeJson = await respone.json();
 
-        if (respone.ok) {
-          setJobData(responeJson.data);
-          console.log(responeJson.data);
-        } else {
-          console.log('error', responeJson);
-        }
-      } catch (error) {
-        console.log('error', error);
+      if (respone.ok) {
+        setJobData(responeJson.data);
+        console.log(responeJson.data);
+      } else {
+        console.log('error', responeJson);
       }
-    },
-    [id]
-  );
+    } catch (error) {
+      console.log('error', error);
+    }
+  }, []);
 
   useEffect(() => {
     if (id) {
@@ -112,7 +110,9 @@ const LowonganPekerjaanDetails = () => {
 
         {/* Lamar */}
         <div className='flex justify-center'>
-          <button className='p-[10px] bg-blue text-white w-fit rounded'>Lamar Sekarang</button>
+          <Link href={{ pathname: 'lowongan-pekerjaan/lamar', query: { id } }}>
+            <button className='p-[10px] bg-blue text-white w-fit rounded'>Lamar Sekarang</button>
+          </Link>
         </div>
       </div>
     </div>

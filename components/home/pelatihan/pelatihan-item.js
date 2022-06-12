@@ -32,7 +32,7 @@ const PelatihanCarousel = ({ id, company_id, title, description, requirement, ad
         </div>
         <div className='flex justify-between items-center '>
           <div className='flex-auto block h-[30px] w-full relative'>
-            <img src={`${process.env.NEXT_PUBLIC_API_BASE}/${company.company_logo_big}`} className='h-[30px]' alt={`${company} logo`}></img>
+            <img src={`${company.company_logo_big}`} className='h-[30px]' alt={`${company.name} logo`}></img>
           </div>
           <p className='text-lb-md text-gray flex-none'>{timeSince(new Date(created_at))}</p>
         </div>
