@@ -83,12 +83,16 @@ const FormLamar = () => {
 
       const formData = new FormData();
       if (role === 'company') {
-        formData.append('company_logo_small', imageLocal, imageLocal.name);
-        formData.append('company_logo_big', imageLocal2, imageLocal2.name);
+        if (imageLocal && imageLocal2) {
+          formData.append('company_logo_small', imageLocal, imageLocal.name);
+          formData.append('company_logo_big', imageLocal2, imageLocal2.name);
+        }
         formData.append('name', comapny_name);
       }
       if (role === 'job_finder') {
-        formData.append('photo', imageLocal, imageLocal.name);
+        if (imageLocal) {
+          formData.append('photo', imageLocal, imageLocal.name);
+        }
         formData.append('birth_place', birth_place);
         formData.append('birth_date', `${birthDate}-${birthMonth}-${birthYear}`);
       }
@@ -115,11 +119,8 @@ const FormLamar = () => {
 
         console.log(responseJson);
 
-        setUser(responseJson.data);
-
         window.sessionStorage.setItem('user', JSON.stringify({ name: responseJson.data.name, photo: responseJson.data.photo }));
       } catch (error) {
-        setUser({});
         router.push('/auth/login');
       }
     },
